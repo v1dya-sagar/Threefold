@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import Context from "../context/Context";
 
-import Loading from "./Loading";
 
-import map from "../assets/MAP.gif";
+
+import map from "../assets/world.jpg";
 import { useNavigate } from "react-router-dom";
 
 const Poster = () => {
@@ -30,7 +30,7 @@ const Poster = () => {
 
   return (
     <div>
-      {isLoading ? <Loading /> : ""}
+  
       <div
         className="flex relative rounded-lg  pt-[2vh] mt-[5vh] gap-10 justify-center items-center md:max-h-[70vh] "
         id="searchposter"

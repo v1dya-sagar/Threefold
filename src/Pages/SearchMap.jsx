@@ -3,7 +3,7 @@ import mapboxgl, { Marker } from "mapbox-gl";
 import polyline from "@mapbox/polyline";
 import { useContext } from "react";
 import Context from "../context/Context";
-import { Wrapper  , Facilites} from "../Components";
+import { Wrapper  } from "../Components";
 import { useParams } from "react-router-dom";
 import { set } from "mongoose";
 
