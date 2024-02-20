@@ -50,7 +50,7 @@ const Navbar = () => {
         
         </div>
         <div className='md:flex hidden gap-[5vh] items-center'>
-          {!Location ? (<h1 className=' font-montserrat font-bold text-red-400 flex items-center gap-[1vh]'><i class="fi fi-rr-marker"></i>Location</h1>) : (<h1 className=' font-montserrat font-bold text-red-400 flex items-center gap-[1vh]'><i class="fi fi-rr-marker"></i>{Location}</h1>)}
+          {!Location ? (<h1 className=' font-montserrat font-bold text-red-400 flex items-center gap-[1vh]'><i className="fi fi-rr-marker"></i>Location</h1>) : (<h1 className=' font-montserrat font-bold text-red-400 flex items-center gap-[1vh]'><i class="fi fi-rr-marker"></i>{Location}</h1>)}
           
       
         </div>
@@ -62,16 +62,16 @@ const Navbar = () => {
             className="shadow-5xl font-medium font-poppins hover:text-[#01796f] transition-transform nav"
             onClick={()=>{modetoggle()}}
           >
-            <i class="fi fi-sr-moon-stars group"></i>
+            <i className="fi fi-sr-moon-stars group"></i>
           </button>) : (<button
               className="shadow-5xl font-medium font-poppins hover:text-[#01796f] transition-transform nav"
               onClick={()=>{modetoggle()}}
             >
-              <i class="fi fi-br-brightness"></i>
+              <i className="fi fi-br-brightness"></i>
             </button>)
         }
           <button className=' font-medium font-poppins hover:text-[#01796f] transition-transform'>
-          <i class="fi fi-br-menu-burger text-xl"></i>
+          <i className="fi fi-br-menu-burger text-xl"></i>
           </button>
         </div>
       </div>

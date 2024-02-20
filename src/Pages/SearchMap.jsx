@@ -6,6 +6,7 @@ import Context from "../context/Context";
 import { Wrapper  } from "../Components";
 import { useParams } from "react-router-dom";
 import { set } from "mongoose";
+import { getLocation } from "../context/data.model";
 
 const SearchMap = () => {
   const { Location , Locationstate , facdata , fetcheddata} = useContext(Context);
@@ -184,7 +185,7 @@ const SearchMap = () => {
     };
 
   const SetAddressMarker = ()=>{
-    const Location = "Velammal Engineering College";
+    const Location = getLocation;
     const addressToGeocode = decodeURIComponent(Location);
     console.log(Location.length > 100 ? address.slice(0, 100).length : Location.length );
     
@@ -223,7 +224,7 @@ const SearchMap = () => {
 
   useEffect(() => {
 
-      SetAddressMarker(Location ? Location : ("Velammal Engineering College"))
+      SetAddressMarker(Location ? Location : (getLocation))
       
   }, []);
 
@@ -257,7 +258,7 @@ const SearchMap = () => {
         <h1 className="mb-[5vh] font-montserrat font-bold text-2xl ">
           Search Results
         </h1>
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col md:flex-row gap-4 flex-wrap">
         {fetcheddata?.map((item) => (
             <div className="h-fit items-center gap-[2vw] shadow-3xl p-4 rounded-lg bg-[#ff5757] md:max-w-[60vh]">
               <p className="font-montserrat font-semibold ">{item?.Name_Address}</p>

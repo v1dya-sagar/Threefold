@@ -1,6 +1,8 @@
 import Context from "./Context";
 import { useState , useEffect} from "react";
 import mapboxgl from 'mapbox-gl';
+import { tamilnaduCenter } from "./data.model";
+
 
 const State = (props) => {
 
@@ -19,36 +21,6 @@ const State = (props) => {
     const [subcategory, setsubcategory] = useState([]);
     const [Item, setItem] = useState([]);
 
-    // To fetch the data for the category
-
-    const fetchcategory = async() => {
-      const res = await fetch('https://ewfl-backend-hemant2335.vercel.app/edevice/categories', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      
-      const data = await res.json();
-      console.log(data)
-      setcategory(data);
-    }
-
-    // To fetch the user details
-    const fetchuser= async() => {
-      const res = await fetch(`https://ewfl-backend-hemant2335.vercel.app/user/${sessionStorage.getItem('user')}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      
-      const data = await res.json();
-      console.log(data?.user);
-      setUser(data?.user);
-    }
-
-    // ALgorith for Location fetching
 
   const ReverseGeocodeaddress = async (lat , log) => {
     mapboxgl.accessToken =
@@ -97,21 +69,18 @@ const State = (props) => {
   // To fetch the Ewaste Facility data
   const fetchcitystate = async () => {
     setisLoading(true);
-    const res = await fetch("https://ewfl-backend-hemant2335.vercel.app/ewaste");
-    const data = await res.json();
-    console.log(data)
-    setfacdata(data);
+
     setisLoading(false);
   }
 
   const fetchaddress = async () => {
     setisLoading(true);
-    const sendstate = await Locationstate?.replace(/\s/g, "").toLowerCase();
+    const sendstate =  Locationstate?.replace(/\s/g, "").toLowerCase();
     console.log(sendstate);
-    const res = await fetch(
-      `https://ewfl-backend-hemant2335.vercel.app/ewaste/${(sendstate)?(sendstate):("haryana")}`
-    );
-    const data = await res.json();
+    // const data = await res.json();
+ 
+    const data = tamilnaduCenter
+      
     setfetcheddata(data?.data?.[0]?.data);
     setisLoading(false);
     console.log("I am latest",data?.data?.[0]?.data)
@@ -126,19 +95,15 @@ const State = (props) => {
     });  
   }, [])
 
-  useEffect(() => {
-    fetchuser( )
-  }, [iscartupdated])
 
     useEffect(() => {
         fetchcitystate();
-         fetchcategory();
          
          fetchaddress();
     }, [Locationstate])
 
   return (
-    <Context.Provider value={{isdark,facdata,iscartupdated , setiscartupdated, fetcheddata,Locationstate , Location , setLocation , User , setUser , setisdark , ispopup , setispopup ,islogin, setislogin , category}}>
+    <Context.Provider value={{fetcheddata,Locationstate , Location , setLocation }}>
         {props.children}
     </Context.Provider>
   )
