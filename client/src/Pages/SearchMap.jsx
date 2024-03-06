@@ -25,7 +25,7 @@ const SearchMap = () => {
 
     const map = new mapboxgl.Map({
       container: "map", // Use the provided coordinates as the initial center
-      style: "mapbox://styles/nishant7412/clmd5l4yi01bz01r71roa6h2m",
+      style: "mapbox://styles/mapbox/outdoors-v12",
       zoom: 18,
       pitch: 50,
       bearing: 0,
@@ -42,10 +42,10 @@ const SearchMap = () => {
     const geocodingApiUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${mapboxgl.accessToken}`;
     const response = await fetch(geocodingApiUrl);
     const data = await response.json();
-
+console.log("I know this will work ! right ? " , data);
     const coordinates = data.features[0].center;
 
-    console.log(coordinates);
+    console.log("Pleaseseeeeeeeee workkkkkkkkk!!!!!",coordinates);
 
     return coordinates;
   };
@@ -166,7 +166,7 @@ const SearchMap = () => {
             },
           });
         }
-        const Newmarker = await new mapboxgl.Marker({ color: "red" })
+        const Newmarker = await new mapboxgl.Marker({ color: "green" })
           .setLngLat(searchCoordinates)
           
         Newmarker.addTo(map);
@@ -186,8 +186,31 @@ const SearchMap = () => {
       }
     };
 
-  const SetAddressMarker = ()=>{
-    const Location = getLocation;
+    const getTheDamnName = async () => {
+   
+        // Get the user's current position using Geolocation API
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+    
+        const { latitude, longitude } = position.coords;
+    
+        // Call Mapbox Geocoding API to get the location name
+        const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=pk.eyJ1IjoibmlzaGFudDc0MTIiLCJhIjoiY2xtYm42NHI5MWN0ZTNkbzVsdzhkNnl0bSJ9.FXHqQifsNwqwWW3g4qEZgw`);
+        const data = await response.json();
+    
+        // Extract the location name from the API response
+        const locationName = data.features[0].place_name;
+    
+        console.log("Current user location:", locationName);
+        return locationName;
+        // Now you have the current user location in naming form
+      
+    };
+
+  const SetAddressMarker = async()=>{
+   
+  const Location  = await getTheDamnName() ;
     const addressToGeocode = decodeURIComponent(Location);
     console.log(Location.length > 100 ? address.slice(0, 100).length : Location.length );
     
@@ -226,7 +249,7 @@ const SearchMap = () => {
 
   useEffect(async() => {
 
-      SetAddressMarker(Location ? Location : (getLocation))
+      SetAddressMarker()
       await axios.get("/search").then((res)=>{
         const dataArray = res.data;
         setCentersData(dataArray);
