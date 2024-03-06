@@ -1,7 +1,6 @@
 import Context from "./Context";
 import { useState , useEffect} from "react";
 import mapboxgl from 'mapbox-gl';
-import { tamilnaduCenter } from "./data.model";
 
 
 const State = (props) => {
@@ -77,13 +76,12 @@ const State = (props) => {
     setisLoading(true);
     const sendstate =  Locationstate?.replace(/\s/g, "").toLowerCase();
     console.log(sendstate);
-    // const data = await res.json();
  
-    const data = tamilnaduCenter
+  
       
-    setfetcheddata(data?.data?.[0]?.data);
+
     setisLoading(false);
-    console.log("I am latest",data?.data?.[0]?.data)
+
   };
 
   useEffect(() => {

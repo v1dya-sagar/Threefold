@@ -7,6 +7,7 @@ import { Wrapper  } from "../Components";
 import { useParams } from "react-router-dom";
 import { set } from "mongoose";
 import { getLocation } from "../context/data.model";
+import axios from "axios";
 
 const SearchMap = () => {
   const { Location , Locationstate , facdata , fetcheddata} = useContext(Context);
@@ -15,6 +16,7 @@ const SearchMap = () => {
   const [marker, setmarker] = useState(null)
   const [searchaddress, setsearchaddress] = useState("");
   const [initaddress, setinitaddress] = useState("");
+  const [centersData ,setCentersData] = useState([]);
 
   // Create a function to initialize the map
   const initializeMap = (coordinates1) => {
@@ -222,11 +224,20 @@ const SearchMap = () => {
     };
   }
 
-  useEffect(() => {
+  useEffect(async() => {
 
       SetAddressMarker(Location ? Location : (getLocation))
-      
+      await axios.get("/search").then((res)=>{
+        const dataArray = res.data;
+        setCentersData(dataArray);
+       
+      })
   }, []);
+
+   
+
+   
+
 
   return (
     <Wrapper>
@@ -236,7 +247,7 @@ const SearchMap = () => {
       
 
         <div id="map" className="h-[70vh] w-full rounded-xl" />
-        <div className="absolute top-0 flex gap-[1vh] justify-between items-center p-4">
+        {/* <div className="absolute top-0 flex gap-[1vh] justify-between items-center p-4">
           <input
             type="text"
             className="w-full mt-2 mx-[2vh] rounded-lg text-[#F9F6EE] p-4 font-montserrat border-2 font-medium bg-[#222222]"
@@ -251,15 +262,15 @@ const SearchMap = () => {
           >
             Search
           </button>
-        </div>
+        </div> */}
       </div>
-      {fetcheddata.length > 0 && <div>
+      {centersData.length > 0 && <div>
       <div className="w-full h-fit mt-[2vh]">
         <h1 className="mb-[5vh] font-montserrat font-bold text-2xl ">
           Search Results
         </h1>
         <div className="flex flex-col md:flex-row gap-4 flex-wrap">
-        {fetcheddata?.map((item) => (
+        {centersData?.map((item) => (
             <div className="h-fit items-center gap-[2vw] shadow-3xl p-4 rounded-lg bg-[#ff5757] md:max-w-[60vh]">
               <p className="font-montserrat font-semibold ">{item?.Name_Address}</p>
               <h2 className="font-montserrat font-bold mt-2 ">Capacity : {item?.Installed_Capacity_Metric_Tons_per_Annum_MTA}</h2>

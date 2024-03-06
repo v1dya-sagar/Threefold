@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from "axios";
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,6 +10,8 @@ import {Homepage , SearchMap } from "./Pages" ;
 import State from './context/State';
 
 const App = () => {
+  axios.defaults.baseURL = "http://localhost:7000";
+  axios.defaults.withCredentials = true;
   return (
     <div>
       <State>
